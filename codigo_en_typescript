@@ -1,0 +1,41 @@
+// inventario.ts
+// Sistema básico de inventario para una farmacia en TypeScript
+
+type Medicamento = {
+  cantidad: number;
+  precio: number;
+};
+
+let inventario: Record<string, Medicamento> = {
+  "Paracetamol": { cantidad: 50, precio: 1.5 },
+  "Ibuprofeno": { cantidad: 30, precio: 2.0 },
+  "Omeprazol": { cantidad: 20, precio: 3.0 },
+};
+
+function mostrarInventario(): void {
+  console.log("\n📋 Inventario de la farmacia:");
+  for (const [medicamento, datos] of Object.entries(inventario)) {
+    console.log(`${medicamento}: ${datos.cantidad} unidades - ${datos.precio}€ c/u`);
+  }
+}
+
+function agregarMedicamento(nombre: string, cantidad: number, precio: number): void {
+  inventario[nombre] = { cantidad, precio };
+  console.log(`✅ ${nombre} agregado al inventario.`);
+}
+
+function venderMedicamento(nombre: string, cantidad: number): void {
+  const med = inventario[nombre];
+  if (med && med.cantidad >= cantidad) {
+    med.cantidad -= cantidad;
+    console.log(`💊 Venta realizada: ${cantidad} unidades de ${nombre}`);
+  } else {
+    console.log(`⚠️ No hay suficiente ${nombre} en inventario.`);
+  }
+}
+
+// Ejemplo de uso:
+mostrarInventario();
+agregarMedicamento("Amoxicilina", 15, 4.5);
+venderMedicamento("Paracetamol", 5);
+mostrarInventario();
